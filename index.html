@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cuidados Sustentáveis com Pets</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- FontAwesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://i.imgur.com/6pIDfh9.png') repeat;
+      background-size: 50px 50px;
+      padding-top: 120px; /* reduzido para menos espaço */
+    }
+
+    /* Cabeçalho fixo */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: #4fc3f7; /* azul claro */
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1100;
+      flex-wrap: wrap;
+      gap: 10px;
+      transition: background-color 0.4s ease;
+    }
+    header.changed {
+      background-color: #1976d2; /* azul escuro ao clicar */
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.6rem;
+      flex: 1 1 auto;
+    }
+    header .welcome-msg {
+      font-size: 1rem;
+      font-style: italic;
+      opacity: 0.9;
+      flex: 1 1 auto;
+      text-align: center;
+      user-select: none;
+    }
+    /* Pesquisa */
+    #search-form {
+      display: flex;
+      flex: 1 1 300px;
+      max-width: 400px;
+      gap: 5px;
+    }
+    #search-input {
+      flex-grow: 1;
+      padding: 6px 12px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+    }
+    #search-button {
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #search-button:hover {
+      background-color: #388e3c;
+    }
+    /* Patinha */
+    .patinha {
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: white;
+      user-select: none;
+      flex: 0 0 auto;
+      transition: color 0.3s ease;
+    }
+    .patinha:hover {
+      color: #ffeb3b;
+    }
+
+    /* Carousel estilização */
+    #petCarousel {
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      position: static;
+      top: unset;
+      left: unset;
+      transform: none;
+      z-index: 1090;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      background: #fff;
+      overflow: hidden;
+    }
+    #petCarousel .carousel-item img {
+      border-radius: 0;
+      max-height: 350px;
+      width: 100%;
+      object-fit: contain;
+      background: #fff;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Conteúdo */
+    main.container.content {
+      max-width: 900px;
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+      margin: 0 auto 50px;
+    }
+    h2, h3 {
+      color: #2e7d32;
+    }
+    h5 {
+      margin-top: 25px;
+      color: #1b5e20;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    /* Novo: área de contato no cabeçalho */
+    .header-contact {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+    .header-contact a, .header-contact button {
+      color: #fff;
+      background: #0288d1;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 12px;
+      margin-left: 4px;
+      font-size: 0.98rem;
+      text-decoration: none;
+      transition: background 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .header-contact a:hover, .header-contact button:hover {
+      background: #01579b;
+      color: #fff;
+      text-decoration: none;
+    }
+    .header-contact .email-link {
+      background: transparent;
+      color: #fff;
+      padding: 0;
+      margin: 0 8px 0 0;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Responsividade */
+    @media (max-width: 576px) {
+      body {
+        padding-top: 170px;
+      }
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      #search-form {
+        max-width: 100%;
+      }
+      #petCarousel {
+        max-width: 100vw;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+        margin: 0 0 15px 0;
+      }
+      #petCarousel .carousel-item img {
+        max-height: 180px;
+        object-fit: contain;
+      }
+      .header-contact {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <h1>Cuidados Sustentáveis com Pets</h1>
+  <div class="welcome-msg">Seja bem-vindo(a) ao nosso site!</div>
+
+  <form id="search-form" onsubmit="return pesquisarPet(event)">
+    <input id="search-input" type="search" placeholder="Pesquisar dicas..." aria-label="Pesquisar dicas" />
+    <button id="search-button" type="submit"><i class="fas fa-search"></i></button>
+  </form>
+  <div class="fas fa-paw patinha" id="patinha" title="Clique para mudar a cor do cabeçalho"></i>
+</header>
+
+<!-- Carousel de imagens movido para cima do conteúdo principal -->
+<div id="petCarousel" class="carousel slide mt-3" data-bs-ride="carousel" style="width:100%;max-width:700px;margin:20px auto 0;">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="imagens/images (1).jpg" alt="Pet sorrindo" class="d-block w-100" />
+    </div>
+    <div class="carousel-item">
+      <img src="imagens/cachorro_em_uma_banheira_com_sabao_no_corpo_e_lingua_pra_fora_-_higiene_para_pet_-_assai_atacadista.jpg" alt="Pet feliz" class="d-block w-100" />
+    </div>
+    <div class="carousel-item">
+      <img src="imagens/pet-saudavel-e-feliz.jpg" alt="Pet saudável" class="d-block w-100" />
+    </div>
+    <div class="carousel-item">
+      <img src="imagens/Brincando-com-o-Pet.jpg" alt="Pet brincando" class="d-block w-100" />
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#petCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#petCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Próximo</span>
+  </button>
+</div>
+
+<!-- Conteúdo principal -->
+<main class="container content">
+  <h2><i class="fas fa-leaf"></i> Como cuidar dos animais de estimação? Descubra 10 dicas</h2>
+  <p>Os animais de estimação precisam de cuidados especiais para se manterem sempre com a saúde em dia, tanto física quanto mental. Com a proximidade mantida por seres humanos, muitas vezes eles absorvem seus problemas e anseios. Assim, descubra a seguir 10 dicas muito importantes para garantir que eles estejam sempre saudáveis e felizes.</p>
+
+  <h5>1. Preste atenção nas suas emoções</h5>
+  <p>Por mais amor que a gente sinta pelos nossos amigos de quatro patas, muitas vezes não sabemos como proporcionar conforto emocional para eles.</p>
+  <p>Os animais de estimação podem ser vistos como “coisas” e, assim, acabam sendo deixados de lado por falta de dinheiro, tempo, mau comportamento ou até mesmo porque um bebê humano nasceu.</p>
+  <p>Ainda que não sejam abandonados na rua, muitos deles deixam de ser o “filhotinho” da casa e são destinados ao quintal, em alguns casos abandonados e sem atenção por horas a fio.</p>
+  <p>Logo, antes de adotar um animal de estimação é necessário ter em mente que ele é um membro da família e vai precisar de atenção e carinho durante toda a sua vida.</p>
+
+  <h5>2. Dê todas as vacinas</h5>
+  <p>Durante o primeiro ano de vida de um animal ele vai precisar tomar várias vacinas. E depois disso, também será necessário dar doses de reforço de tempos em tempos.</p>
+  <p>As vacinas são essenciais pois evitam que o animal tenha doenças como raiva, cinomose e gripe canina, por exemplo.</p>
+  <p>Algumas delas são obrigatórias. Entretanto, quanto mais protegido o animal estiver, melhor! Portanto, é interessante não abrir mão de nenhuma delas.</p>
+
+  <h5>3. Faça exames regularmente</h5>
+  <p>Outro cuidado importante (e que muita gente negligencia) é a realização de exames de sangue periódicos. Essa medida preventiva garante que caso exista algum problema ele seja detectado e tratado o mais rápido possível.</p>
+  <p>Por meio de um check-up completo, o profissional de Medicina Veterinária vai verificar a saúde do seu pet por inteiro, desde o funcionamento dos órgãos até problemas mais simples, como anemia ou presença de vermes, por exemplo.</p>
+
+  <h5>4. Escove seus dentes</h5>
+  <p>Muitas doenças começam pela boca, desde inflamações na gengiva até alguns tipos de câncer. Por isso, cuidar bem da saúde bucal do seu animal de estimação pode contribuir bastante para prolongar sua vida em até 5 anos.</p>
+  <ul>
+    <li>Escovar os dentes com uma escova de dedo e pasta de dentes específica para animais;</li>
+    <li>Atentar-se à qualquer alteração nos dentes e gengivas do seu pet, como lesões, vermelhidão ou caroços;</li>
+    <li>Ficar de olho em caso de mau hálito exagerado;</li>
+    <li>Realizar um exame oral anual.</li>
+  </ul>
+
+  <h5>5. Cuide da alimentação</h5>
+  <p>Uma alimentação saudável é muito importante para que seu animal se desenvolva de forma saudável.</p>
+  <p>De maneira geral, cães e gatos precisam de proteínas de boa qualidade, fibras, vitaminas, óleos de peixe e grãos.</p>
+  <p>Uma ração de qualidade costuma ter todos esses elementos. Mas, você também pode aderir à alimentação natural. Hoje em dia existem nutricionistas especializados em alimentação animal.</p>
+
+  <h5>6. Leve seu pet para passear</h5>
+  <p>Os passeios fazem muito bem para a saúde física e mental dos animais.</p>
+  <p>Além de ajudar no controle do peso, atividades desse tipo também são importantes para socialização tanto com pessoas quanto com outros animais e também para relaxar e explorar novos ambientes.</p>
+
+  <h5>7. Ofereça brinquedos</h5>
+  <p>Brincar é muito importante para os animais. Eles precisam morder, roer e arranhar, simulando ações que fariam na natureza.</p>
+  <p>Por isso, aposte em brinquedos que estimulem seus sentidos. Eles aliviam o tédio e ainda ajudam a distrair seu pet quando você não estiver em casa.</p>
+
+  <h5>8. Previna carrapatos, pulgas e outros parasitas</h5>
+  <p>Além de causarem incômodos e irritações na pele, esses parasitas podem ocasionar doenças aos animais.</p>
+  <p>Dessa forma, aja preventivamente usando medicamentos, coleiras e outros recursos para evitar a infestação.</p>
+
+  <h5>9. Fique atento ao banho</h5>
+  <p>Nem todos os animais precisam de banho. Algumas espécies, como os gatos, são capazes de se limpar sozinhos e não é indicado que tomem banhos regularmente.</p>
+  <p>Para evitar problemas de pele, escolha produtos específicos para a raça, cor e tipo do seu animal e não deixe de secar bem seus amigos de quatro patas, especialmente se estiver mais frio.</p>
+
+  <h5>10. Evite barulho</h5>
+  <p>Os animais são bastante sensíveis a barulhos. Por isso, festas e ocasiões com som alto e fogos de artifício podem ser bastante estressantes para eles. Assim, busque protegê-los dessas situações.</p>
+
+  <h3>Dicas de clínicas gratuitas e locais para vacinar seu pet</h3>
+  <p>Para garantir que seu pet tenha acesso a cuidados veterinários essenciais, confira abaixo algumas clínicas gratuitas e pontos de vacinação recomendados:</p>
+
+  <ul>
+    <li><strong>Clínica Veterinária Popular da Prefeitura</strong> - Atendimento gratuito para castração, vacinação e consultas básicas. Verifique o site da sua prefeitura para agendamento.</li>
+    <li><strong>Postos de Saúde e Zoonoses</strong> - Muitos municípios oferecem vacinação antirrábica gratuita em datas específicas. Consulte a Secretaria de Saúde local.</li>
+    <li><strong>ONGs de Proteção Animal</strong> - Algumas ONGs promovem campanhas gratuitas de vacinação e atendimento. Procure no seu bairro ou cidade.</li>
+  </ul>
+
+  <h5>Links úteis:</h5>
+  <ul>
+    <li><a href="https://www.saude.gov.br/saude-de-a-z/controle-de-zoonoses" target="_blank" rel="noopener">Ministério da Saúde - Controle de Zoonoses</a></li>
+    <li><a href="https://www.ibama.gov.br" target="_blank" rel="noopener">IBAMA - Informações sobre animais</a></li>
+    <li><a href="https://vacina.pet.br" target="_blank" rel="noopener">Vacina Pet - Localização de pontos de vacinação</a></li>
+  </ul>
+</main>
+ <div class="header-contact">
+    <a href="mailto:contato@petsustentavel.com" class="email-link" title="Envie um e-mail para contato">contato@petsustentavel.com</a>
+    <a href="mailto:contato@petsustentavel.com" title="Fale conosco">
+      <i class="fas fa-envelope"></i> Fale Conosco
+    </a>
+    <a href="#" onclick="alert('Em breve! Envie seu currículo para contato@petsustentavel.com')" title="Faça parte do nosso time">
+      <i class="fas fa-users"></i> Faça Parte do Nosso Time
+    </a>
+  </div>
+<!-- Bootstrap JS Bundle (popper + bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Efeito de clicar na patinha para mudar cor do cabeçalho
+  const patinha = document.getElementById('patinha');
+  const header = document.getElementById('header');
+
+  patinha.addEventListener('click', () => {
+    header.classList.toggle('changed');
+  });
+
+  // Função simples de pesquisa que filtra dicas por texto
+  function pesquisarPet(event) {
+    event.preventDefault();
+    const termo = document.getElementById('search-input').value.toLowerCase();
+    if(!termo) {
+      alert('Por favor, digite um termo para pesquisar!');
+      return;
+    }
+
+    const dicas = [...document.querySelectorAll('main h5, main h3, main h2')];
+    let encontrou = false;
+    dicas.forEach(titulo => {
+      const texto = titulo.textContent.toLowerCase();
+      if(texto.includes(termo)) {
+        titulo.scrollIntoView({behavior: 'smooth', block: 'start'});
+        titulo.style.backgroundColor = '#fff59d'; // destaque amarelo
+        setTimeout(() => titulo.style.backgroundColor = '', 3000);
+        encontrou = true;
+      }
+    });
+
+    if(!encontrou) {
+      alert('Nenhuma dica encontrada com o termo: ' + termo);
+    }
+  }
+</script>
+
+</body>
+</html>
